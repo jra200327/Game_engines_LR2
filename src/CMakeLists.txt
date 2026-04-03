@@ -19,5 +19,5 @@ add_executable(${TARGET_NAME}
 #target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 target_compile_features(${TARGET_NAME} PRIVATE cxx_std_20)
 
-target_link_libraries(${TARGET_NAME} PUBLIC ${ECS_LIB_NAME})
+target_link_libraries(${TARGET_NAME} PUBLIC easy_ecs)
 target_link_libraries(${TARGET_NAME} PUBLIC ImGui-SFML::ImGui-SFML)
