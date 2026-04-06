@@ -18,21 +18,89 @@ class ComponentStorage final : public BaseComponentStorage {
 
     int _id;
 
-    void Resize(const int sparseSize, const int dataSize);
+    void Resize(const int sparseSize, const int dataSize)
+    {
+        int oldSparseSize = _sparse.size();
+        if (oldSparseSize < sparseSize) 
+        {
+            _sparse.resize(sparseSize);
+            std::fill_n(_sparse.data() + oldSparseSize,
+            sparseSize - oldSparseSize, -1);
+        }
+        int oldDataSize = _dense.size();
+        if (oldDataSize < dataSize) 
+        {
+            _dense.resize(dataSize);
+            _data.resize(dataSize);
+            std::fill_n(_dense.data() + oldDataSize,
+            dataSize - oldDataSize, -1);
+        }
+    }
 
 public:
-    ComponentStorage(internal::IWorldInternal& w, const int id);
+    // ToDo:
+    ComponentStorage(internal::IWorldInternal& w, const int id): 
+    _world(w), _id(id), _count(0)
+    {
+        _sparse.resize(50, -1);
+        _dense.resize(50, -1);
+        _data.resize(50);
+    }
 
-    bool Has(const int e) const override;
-    T& Get(const int e);
-    T& Add(const int e, const T& value);
-    void Remove(const int e) override;
+    bool Has(const int e) const override
+    {
+        return e < _sparse.size() && _sparse[e]!= -1; 
+    }
 
-    std::span<const T> All() const;
-    std::span<const int> Entities() const override;
+    T& Get(const int e)
+    {
+        return _data[_sparse[e]];
+    }
 
-    int Count() const override;
-    int Id() const override;
+    T& Add(const int e, const T& value)
+    {
+        Resize((e / 64 + 1) * 64, _data.size() == _count + 1 ? _data.size() + 64 :
+        _data.size());
+        _data[_count] = value;
+        _dense[_count] = e;
+        _sparse[e] = _count;
+        _count++;
+        _world.EntityComponentsChanged(e, _id, true);
+        return _data[_sparse[e]];
+    }
+
+    void Remove(const int e) override
+    {
+        int arrayIndex = _sparse[e];
+        int lastEntityIid = _dense[--_count];
+        _data[arrayIndex] = _data[_count];
+        _dense[arrayIndex] = lastEntityIid;
+        _sparse[lastEntityIid] = arrayIndex;
+        _sparse[e] = -1;
+        _world.EntityComponentsChanged(e, _id, false);
+    }
+
+    // ToDo: возврат всех компонентов данного типа
+    std::span<const T> All() const
+    {
+        return std::span(_data.begin(), _count);
+    }
+    // ToDo: возврат всех сущностей с компонентом данного типа
+    std::span<const int> Entities() const override
+    {
+         return std::span(_dense.begin(), _count);
+    }
+
+    // ToDo:
+    int Count() const override
+    {   
+        return _count;
+    }
+
+    int Id() const override
+    {
+        return _id;
+    }
 };
 
 #endif //COMPONENTSTORAGE_H

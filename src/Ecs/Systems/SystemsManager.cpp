@@ -1,5 +1,10 @@
 #include "SystemsManager.h"
 
+SystemsManager::SystemsManager(World& world) : _world(world) 
+{
+    
+}
+
 SystemsManager& SystemsManager::AddInitializer(std::shared_ptr<IInitializer> initializer)
 {
     _newInitializers.push_back(initializer);
