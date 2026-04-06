@@ -3,12 +3,14 @@
 SystemsManager& SystemsManager::AddInitializer(std::shared_ptr<IInitializer> initializer)
 {
     _newInitializers.push_back(initializer);
+    return *this;
 }
 
 SystemsManager& SystemsManager::AddSystem(std::shared_ptr<ISystem> system)
 {
     _newInitializers.push_back(system);
     _systems.push_back(system);
+    return *this;
 }
 
 void SystemsManager::Initialize()
