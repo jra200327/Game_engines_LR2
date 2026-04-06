@@ -41,12 +41,13 @@ T& ComponentStorage<T>::Add(const int entityIid, const T& value)
 template <typename T>
 void ComponentStorage<T>::Remove(const int entityIid)
 {
-int arrayIndex = _sparse[entityIid];
-int lastEntityIid = _dense[--_count];
-_data[arrayIndex] = _data[_count];
-_dense[arrayIndex] = lastEntityIid;
-_sparse[lastEntityIid] = arrayIndex;
-_sparse[entityIid] = -1;
+    int arrayIndex = _sparse[entityIid];
+    int lastEntityIid = _dense[--_count];
+    _data[arrayIndex] = _data[_count];
+    _dense[arrayIndex] = lastEntityIid;
+    _sparse[lastEntityIid] = arrayIndex;
+    _sparse[entityIid] = -1;
+    _world.EntityComponentsChanged(e, _id, false);
 }
 
 template <typename T>
