@@ -10,6 +10,8 @@ set(SOURCES main.cpp
         Sample/Components/CollisionComponent.h
         Sample/Systems/InputSystem.cpp
         Sample/Systems/InputSystem.h
+        Sample/Systems/CollisionSystem.cpp
+        Sample/Systems/CollisionSystem.h
         Sample/Components/MoveInputEvent.h
 )
 

@@ -7,6 +7,7 @@
 #include "Sample/Systems/InitSystem.h"
 #include "Sample/Systems/InputSystem.h"
 #include "Sample/Systems/MovementSystem.h"
+#include "Sample/Systems/CollisionSystem.h"
 
 int main() {
     setlocale(LC_ALL, "");
@@ -21,6 +22,7 @@ int main() {
     systems.AddInitializer(std::make_shared<InitSystem>(world));
     systems.AddSystem(std::make_shared<InputSystem>(world, window));
     systems.AddSystem(std::make_shared<MovementSystem>(world));
+    systems.AddSystem(std::make_shared<CollisionSystem>(world));
 
     while (window.isOpen()) {
         systems.Update();

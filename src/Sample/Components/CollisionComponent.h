@@ -3,11 +3,11 @@
 
 #include <SFML/System/Vector2.hpp>
 #include <vector>
-#include "ICollider.h"
+#include "BoxColliderComponent.h"
 
 struct CollisionComponent
 {
-    std::vector<ICollider> Collisions;
+    std::vector<int> CollisionEntities;
 };
 
 #endif //COLLISIONCOMPONENT_H

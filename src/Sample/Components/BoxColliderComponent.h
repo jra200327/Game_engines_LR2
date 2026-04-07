@@ -2,9 +2,8 @@
 #define BOXCOLLIDERCOMPONENT_H
 
 #include <SFML/System/Vector2.hpp>
-#include "ICollider.h"
 
-struct BoxColliderComponent : ICollider
+struct BoxColliderComponent
 {
     float Width;
     float Height;
