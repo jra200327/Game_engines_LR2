@@ -6,6 +6,8 @@ set(SOURCES main.cpp
         Sample/Systems/InitSystem.h
         Sample/Components/PositionComponent.h
         Sample/Components/MovementComponent.h
+        Sample/Components/BoxColliderComponent.h
+        Sample/Components/CollisionComponent.h
         Sample/Systems/InputSystem.cpp
         Sample/Systems/InputSystem.h
         Sample/Components/MoveInputEvent.h
