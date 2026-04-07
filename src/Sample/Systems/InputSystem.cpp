@@ -12,10 +12,20 @@ void InputSystem::OnUpdate()
         {
             _window.close();
         }
-        else if (event->getIf<sf::Event::KeyPressed>())
+        else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
         {
             const int eventEnt = world.CreateEntity();
-            _eventComponents.Add(eventEnt, MoveInputEvent());
+            MoveDirection dir = MoveDirection::None;
+            if (keyPressed->code == sf::Keyboard::Key::A)
+            {
+                dir = MoveDirection::Right;
+            }
+            else if (keyPressed->code == sf::Keyboard::Key::D)
+            {
+                dir = MoveDirection::Left;
+            }
+
+            _eventComponents.Add(eventEnt, MoveInputEvent(dir));
         }
     }
 }

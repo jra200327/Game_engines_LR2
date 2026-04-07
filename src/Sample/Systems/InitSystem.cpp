@@ -18,8 +18,4 @@ void InitSystem::OnInit()
     movementsStorage.Add(player1, MovementComponent(5, sf::Vector2f(0, 1)));
     boxColliderStorage.Add(player1, BoxColliderComponent(10, 10));
     collisionStorage.Add(player1, CollisionComponent());
-    positionsStorage.Add(player2, PositionComponent(0, 100));
-    movementsStorage.Add(player2, MovementComponent(5, sf::Vector2f(0, -1)));
-    boxColliderStorage.Add(player2, BoxColliderComponent(10, 10));
-    collisionStorage.Add(player2, CollisionComponent());
 }

@@ -14,19 +14,28 @@ void MovementSystem::OnInit()
 
 void MovementSystem::OnUpdate()
 {
-    for (const auto event : _moveInputEvents)
+    for (const auto eventEntity : _moveInputEvents)
     {
         for (const auto ent : _moveables)
         {
             auto& position = _positionComponents.Get(ent);
             auto& movement = _movementComponents.Get(ent);
+            auto& event = _moveInputEventComponents.Get(eventEntity);
+
+            if(event.Direction == MoveDirection::Right)
+            {
+                movement.Direction.x = -1;
+            }
+            else if (event.Direction == MoveDirection::Left)
+            {
+                movement.Direction.x = 1;
+            }
 
             position.X += movement.Speed * movement.Direction.x;
-            position.Y += movement.Speed * movement.Direction.y;
 
             Print(ent);
         }
 
-        world.RemoveEntity(event);
+        world.RemoveEntity(eventEntity);
     }
 }

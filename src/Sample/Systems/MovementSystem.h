@@ -12,6 +12,7 @@
 class MovementSystem final : public ISystem {
     ComponentStorage<PositionComponent>& _positionComponents;
     ComponentStorage<MovementComponent>& _movementComponents;
+    ComponentStorage<MoveInputEvent>& _moveInputEventComponents;
 
     Filter _moveables;
     Filter _moveInputEvents;
@@ -23,6 +24,7 @@ public:
         : ISystem(world),
             _positionComponents(world.GetStorage<PositionComponent>()),
             _movementComponents(world.GetStorage<MovementComponent>()),
+            _moveInputEventComponents(world.GetStorage<MoveInputEvent>()),
             _moveables(FilterBuilder(world)
                 .With<PositionComponent>()
                 .With<MovementComponent>()
