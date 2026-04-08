@@ -8,10 +8,13 @@ set(SOURCES main.cpp
         Sample/Components/MovementComponent.h
         Sample/Components/BoxColliderComponent.h
         Sample/Components/CollisionComponent.h
+        Sample/Components/SpriteComponent.h
         Sample/Systems/InputSystem.cpp
         Sample/Systems/InputSystem.h
         Sample/Systems/CollisionSystem.cpp
         Sample/Systems/CollisionSystem.h
+        Sample/Systems/RenderSystem.cpp
+        Sample/Systems/RenderSystem.h
         Sample/Components/MoveInputEvent.h
 )
 

@@ -4,6 +4,7 @@
 #include "../Components/MovementComponent.h"
 #include "../Components/BoxColliderComponent.h"
 #include "../Components/CollisionComponent.h"
+#include "../Components/SpriteComponent.h"
 
 void InitSystem::OnInit()
 {
@@ -13,9 +14,11 @@ void InitSystem::OnInit()
     auto& movementsStorage = world.GetStorage<MovementComponent>();
     auto& boxColliderStorage = world.GetStorage<BoxColliderComponent>();
     auto& collisionStorage = world.GetStorage<CollisionComponent>();
+    auto& spriteStorage = world.GetStorage<SpriteComponent>();
 
     positionsStorage.Add(player1, PositionComponent(0, 0));
     movementsStorage.Add(player1, MovementComponent(5, sf::Vector2f(0, 1)));
     boxColliderStorage.Add(player1, BoxColliderComponent(10, 10));
     collisionStorage.Add(player1, CollisionComponent());
+    spriteStorage.Add(player1, SpriteComponent(sf::Vector2i(0, 1), sf::Vector2i(0, 1), _texture));
 }
