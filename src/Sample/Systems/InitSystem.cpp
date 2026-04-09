@@ -9,16 +9,15 @@
 void InitSystem::OnInit()
 {
     const int player1 = world.CreateEntity();
-    const int player2 = world.CreateEntity();
     auto& positionsStorage = world.GetStorage<PositionComponent>();
     auto& movementsStorage = world.GetStorage<MovementComponent>();
     auto& boxColliderStorage = world.GetStorage<BoxColliderComponent>();
     auto& collisionStorage = world.GetStorage<CollisionComponent>();
     auto& spriteStorage = world.GetStorage<SpriteComponent>();
 
-    positionsStorage.Add(player1, PositionComponent(0, 0));
-    movementsStorage.Add(player1, MovementComponent(5, sf::Vector2f(0, 1)));
+    positionsStorage.Add(player1, PositionComponent(32, 680));
+    movementsStorage.Add(player1, MovementComponent(10, sf::Vector2f(0, 1)));
     boxColliderStorage.Add(player1, BoxColliderComponent(10, 10));
     collisionStorage.Add(player1, CollisionComponent());
-    spriteStorage.Add(player1, SpriteComponent(sf::Vector2i(0, 1), sf::Vector2i(0, 1), _texture));
+    spriteStorage.Add(player1, SpriteComponent(sf::Vector2i(48, 32), sf::Vector2i(96, 128), _texture, -90));
 }

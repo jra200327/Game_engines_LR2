@@ -28,3 +28,20 @@ target_compile_features(${TARGET_NAME} PRIVATE cxx_std_20)
 
 target_link_libraries(${TARGET_NAME} PUBLIC easy_ecs)
 target_link_libraries(${TARGET_NAME} PUBLIC ImGui-SFML::ImGui-SFML)
+
+target_include_directories(${TARGET_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Ecs
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sample
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sample/Systems
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sample/Components
+)
+
+# Copy resources to build directory
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Images DESTINATION ${CMAKE_BINARY_DIR})
+
+# Set working directory for debugging
+set_target_properties(${TARGET_NAME} PROPERTIES
+    VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)

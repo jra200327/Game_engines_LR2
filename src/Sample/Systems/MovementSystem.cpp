@@ -30,6 +30,11 @@ void MovementSystem::OnUpdate()
             {
                 movement.Direction.x = 1;
             }
+            else {
+            {
+                movement.Direction.x = 0;
+            }
+            }
 
             position.X += movement.Speed * movement.Direction.x;
 

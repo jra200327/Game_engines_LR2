@@ -20,7 +20,7 @@ int main() {
     window.setFramerateLimit(60);
 
     sf::Texture texture;
-    texture.loadFromFile("D:\\C++\\Lab2\\ECS-lab\\src\\Images\\asteroids.png");
+    texture.loadFromFile("C:\\C++\\Game_engines_LR2\\src\\Images\\asteroids.png");
 
     World world;
     SystemsManager systems(world);

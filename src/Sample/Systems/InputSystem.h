@@ -13,6 +13,9 @@ class InputSystem : public ISystem {
 
     ComponentStorage<MoveInputEvent>& _eventComponents;
 
+    bool _isLeftPressed = false;
+    bool _isRightPressed = false;
+
 public:
     InputSystem(World &world, sf::RenderWindow& window)
         : ISystem(world),

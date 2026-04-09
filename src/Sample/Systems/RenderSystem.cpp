@@ -12,9 +12,7 @@ void RenderSystem::OnUpdate()
          auto& position = _positionComponents.Get(ent);
          auto& sprite = _spriteComponents.Get(ent);
 
-         sprite.sprite.setPosition(sf::Vector2f(position.X, position.Y));
-         sprite.sprite.setTextureRect(sf::IntRect(sprite.atlasPos, sprite.size));
-
-         _window.draw(sprite.sprite);
+         sprite.sprite->setPosition(sf::Vector2f(position.X, position.Y));
+         _window.draw(*sprite.sprite);
     }
 }
