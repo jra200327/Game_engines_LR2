@@ -18,6 +18,7 @@ class Filter {
 public:
     Filter(World& world,
         const std::vector<std::shared_ptr<BaseComponentStorage>>& componentStorages);
+    bool Empty();
 
     class Iterator
     {
@@ -48,6 +49,7 @@ public:
         Iterator& operator++();
 
         bool operator!=(const Iterator& other) const;
+        bool operator==(const Iterator& other) const;
     };
 
     Iterator begin();

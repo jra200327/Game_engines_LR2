@@ -9,15 +9,19 @@ set(SOURCES main.cpp
         Sample/Components/BoxColliderComponent.h
         Sample/Components/CollisionComponent.h
         Sample/Components/SpriteComponent.h
+        Sample/Components/ShooterComponent.h
         Sample/Systems/InputSystem.cpp
         Sample/Systems/InputSystem.h
         Sample/Systems/CollisionSystem.cpp
         Sample/Systems/CollisionSystem.h
         Sample/Systems/RenderSystem.cpp
         Sample/Systems/RenderSystem.h
+        Sample/Systems/ShootingSystem.cpp
+        Sample/Systems/ShootingSystem.h
         Sample/Systems/EntityFactory.cpp
         Sample/Systems/EntityFactory.h
         Sample/Components/MoveInputEvent.h
+        Sample/Components/ShootEvent.h
         Ecs/Window/Window.cpp
 )
 

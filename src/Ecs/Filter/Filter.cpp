@@ -91,6 +91,11 @@ bool Filter::Iterator::operator!=(const Iterator& other) const
     return _current != other._current;
 }
 
+bool Filter::Iterator::operator==(const Iterator& other) const
+{
+    return _current == other._current;
+}
+
 Filter::Iterator Filter::begin()
 {
     const auto& minStorage = _componentStorages[_minStorageIndex];

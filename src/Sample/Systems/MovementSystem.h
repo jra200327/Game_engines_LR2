@@ -8,6 +8,7 @@
 #include "../Components/MoveInputEvent.h"
 #include "../Components/PositionComponent.h"
 #include "../Components/MovementComponent.h"
+#include "../Components/ShooterComponent.h"
 
 class MovementSystem final : public ISystem {
     ComponentStorage<PositionComponent>& _positionComponents;
@@ -15,6 +16,7 @@ class MovementSystem final : public ISystem {
     ComponentStorage<MoveInputEvent>& _moveInputEventComponents;
 
     Filter _moveables;
+    Filter _player;
     Filter _moveInputEvents;
 
     void Print(int ent);  // Это тоже можно вынести в отдельную систему
@@ -31,6 +33,11 @@ public:
                 .Build()),
             _moveInputEvents(FilterBuilder(world)
                 .With<MoveInputEvent>()
+                .Build()),
+            _player(FilterBuilder(world)
+                .With<PositionComponent>()
+                .With<MovementComponent>()
+                .With<ShooterComponent>()
                 .Build())
     {
     }

@@ -25,6 +25,7 @@ class Window {
     bool _isRun;
 
     void Initialize();
+    void UpdateInputLogic();
 
 public:
     Window(const int windowWidth, const int windowHeight);

@@ -23,6 +23,10 @@ void InputSystem::OnUpdate()
             {
                 _isLeftPressed = true;
             }
+            else if (keyPressed->code == sf::Keyboard::Key::Space)
+            {
+                _isShooting = true;
+            }
         }
         else if (const auto* keyReleased = event->getIf<sf::Event::KeyReleased>())
         {
@@ -33,6 +37,10 @@ void InputSystem::OnUpdate()
             else if (keyReleased->code == sf::Keyboard::Key::D)
             {
                 _isLeftPressed = false;
+            }
+            else if (keyReleased->code == sf::Keyboard::Key::Space)
+            {
+                _isShooting = false;
             }
         }
     }
@@ -47,11 +55,16 @@ void InputSystem::OnUpdate()
     {
         dir = MoveDirection::Right;
     }
-    // Optional: handle both pressed (maybe none or some other direction)
     
     if (dir != MoveDirection::None)
     {
         const int eventEnt = world.CreateEntity();
-        _eventComponents.Add(eventEnt, MoveInputEvent(dir));
+        _moveEventComponents.Add(eventEnt, MoveInputEvent(dir));
+    }
+
+    if (_isShooting)
+    {
+        const int eventEnt = world.CreateEntity();
+        _shootEventComponents.Add(eventEnt, ShootEvent());
     }
 }

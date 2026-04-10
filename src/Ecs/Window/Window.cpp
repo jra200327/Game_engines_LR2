@@ -5,6 +5,7 @@
 #include "../../Sample/Systems/MovementSystem.h"
 #include "../../Sample/Systems/CollisionSystem.h"
 #include "../../Sample/Systems/RenderSystem.h"
+#include "../../Sample/Systems/ShootingSystem.h"
 
 Window::Window(const int windowWidth, const int windowHeight): _world()
 {
@@ -29,6 +30,7 @@ void Window::Initialize()
     _systems->AddSystem(std::make_shared<MovementSystem>(_world));
     _systems->AddSystem(std::make_shared<CollisionSystem>(_world));
     _systems->AddSystem(std::make_shared<RenderSystem>(_world, _window, _texture));
+    _systems->AddSystem(std::make_shared<ShootingSystem>(_world, *_entityFactory));
 
 }
 
