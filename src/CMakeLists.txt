@@ -18,6 +18,7 @@ set(SOURCES main.cpp
         Sample/Systems/EntityFactory.cpp
         Sample/Systems/EntityFactory.h
         Sample/Components/MoveInputEvent.h
+        Ecs/Window/Window.cpp
 )
 
 add_subdirectory(Ecs)
