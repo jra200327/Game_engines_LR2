@@ -15,6 +15,8 @@ set(SOURCES main.cpp
         Sample/Systems/CollisionSystem.h
         Sample/Systems/RenderSystem.cpp
         Sample/Systems/RenderSystem.h
+        Sample/Systems/EntityFactory.cpp
+        Sample/Systems/EntityFactory.h
         Sample/Components/MoveInputEvent.h
 )
 
