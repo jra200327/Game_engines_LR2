@@ -7,8 +7,9 @@
 #include "../../Sample/Systems/CollisionResolveSystem.h"
 #include "../../Sample/Systems/RenderSystem.h"
 #include "../../Sample/Systems/ShootingSystem.h"
+#include "../../Sample/Systems/AsteroidSpawnSystem.h"
 
-Window::Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg): _world()
+Window::Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg, const SpawnConfig spCfg): _world(), _spawnCd(spCfg.cd)
 {
     _window.create(sf::VideoMode({static_cast<unsigned int>(windCfg.width), static_cast<unsigned int>(windCfg.height)}), "Asteroid");
      auto desktop = sf::VideoMode::getDesktopMode();
@@ -33,6 +34,7 @@ void Window::Initialize()
     _systems->AddSystem(std::make_shared<RenderSystem>(_world, _window, _texture));
     _systems->AddSystem(std::make_shared<ShootingSystem>(_world, *_entityFactory));
     _systems->AddSystem(std::make_shared<CollisionResolveSystem>(_world));
+    _systems->AddSystem(std::make_shared<AsteroidSpawnSystem>(_world, *_entityFactory, _spawnCd, _window.getSize().x));
 }
 
 void Window::Run()

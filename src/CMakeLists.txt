@@ -19,6 +19,8 @@ set(SOURCES main.cpp
         Sample/Systems/CollisionSystem.h
         Sample/Systems/CollisionResolveSystem.cpp
         Sample/Systems/CollisionResolveSystem.h
+        Sample/Systems/AsteroidSpawnSystem.cpp
+        Sample/Systems/AsteroidSpawnSystem.h
         Sample/Systems/RenderSystem.cpp
         Sample/Systems/RenderSystem.h
         Sample/Systems/ShootingSystem.cpp

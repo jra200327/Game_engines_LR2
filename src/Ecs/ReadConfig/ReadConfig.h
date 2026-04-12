@@ -26,6 +26,10 @@ struct AsteroidConfig {
     float offset;
 };
 
-bool ReadConfig(WindowConfig& window, ShooterConfig& shooter, ImageConfig& image, AsteroidConfig& asteroid);
+struct SpawnConfig {
+    float cd;
+};
+
+bool ReadConfig(WindowConfig& window, ShooterConfig& shooter, ImageConfig& image, AsteroidConfig& asteroid, SpawnConfig& spawn);
 
 #endif // READ_CONFIG_H

@@ -20,6 +20,7 @@ class Window {
     std::shared_ptr<SystemsManager> _systems;
     std::shared_ptr<EntityFactory> _entityFactory;
     sf::Texture _texture;
+    int _spawnCd;
 
     sf::Clock _deltaClock;
 
@@ -29,7 +30,7 @@ class Window {
     void UpdateInputLogic();
 
 public:
-    Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg);
+    Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg, const SpawnConfig spCfg);
     
     void Run();
 

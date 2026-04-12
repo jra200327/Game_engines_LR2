@@ -8,7 +8,7 @@
 #include "ReadConfig.h"
 
 
-bool ReadConfig(WindowConfig& window, ShooterConfig& shooter, ImageConfig& image, AsteroidConfig& asteroid) {
+bool ReadConfig(WindowConfig& window, ShooterConfig& shooter, ImageConfig& image, AsteroidConfig& asteroid, SpawnConfig& spawn) {
     std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
     std::ifstream file("../../config.txt");
     if (!file) {
@@ -32,6 +32,8 @@ bool ReadConfig(WindowConfig& window, ShooterConfig& shooter, ImageConfig& image
             std::cout << image.path;
         } else if (cmd == "Asteroid") {
             iss >> asteroid.minSpeed >> asteroid.maxSpeed >> asteroid.minSize >> asteroid.maxSize >> asteroid.offset;
+        } else if (cmd == "Spawn") {
+            iss >> spawn.cd;
         } else {
             // Для плейсхолдера или неизвестных команд
             std::cout << "Unknown config line: " << line << "\n";
