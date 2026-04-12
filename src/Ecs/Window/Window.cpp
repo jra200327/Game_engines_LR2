@@ -19,7 +19,7 @@ Window::Window(const int windowWidth, const int windowHeight): _world()
     _texture.loadFromFile("..\\..\\Images\\asteroids.png");
 
     _systems = std::make_shared<SystemsManager>(_world);
-    _entityFactory = std::make_shared<EntityFactory>(_world, _texture);
+    _entityFactory = std::make_shared<EntityFactory>(_world, _texture, 1, 4, 0.5, 2.5, 1);
 
     Initialize();
 }
