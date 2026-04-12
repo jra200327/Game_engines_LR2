@@ -8,18 +8,18 @@
 #include "../../Sample/Systems/RenderSystem.h"
 #include "../../Sample/Systems/ShootingSystem.h"
 
-Window::Window(const int windowWidth, const int windowHeight): _world()
+Window::Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg): _world()
 {
-    _window.create(sf::VideoMode({static_cast<unsigned int>(windowWidth), static_cast<unsigned int>(windowHeight)}), "Asteroid");
+    _window.create(sf::VideoMode({static_cast<unsigned int>(windCfg.width), static_cast<unsigned int>(windCfg.height)}), "Asteroid");
      auto desktop = sf::VideoMode::getDesktopMode();
-    _window.setPosition({ (int) (desktop.size.x / 2 - windowWidth / 2), (int) (desktop.size.y / 2 - windowHeight / 2) });
+    _window.setPosition({ (int) (desktop.size.x / 2 - windCfg.width / 2), (int) (desktop.size.y / 2 - windCfg.height / 2) });
 
     _window.setFramerateLimit(60);
 
-    _texture.loadFromFile("..\\..\\Images\\asteroids.png");
+    _texture.loadFromFile(imgCfg.path);
 
     _systems = std::make_shared<SystemsManager>(_world);
-    _entityFactory = std::make_shared<EntityFactory>(_world, _texture, 1, 4, 0.5, 2.5, 1);
+    _entityFactory = std::make_shared<EntityFactory>(_world, _texture, astCfg, shootCfg);
 
     Initialize();
 }

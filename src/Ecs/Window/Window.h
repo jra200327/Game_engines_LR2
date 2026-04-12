@@ -12,6 +12,7 @@
 #include "../World/World.h"
 #include "../Window/Window.h"
 #include "../../Sample/Systems/EntityFactory.h"
+#include "../ReadConfig/ReadConfig.h"
 
 class Window {
     sf::RenderWindow _window;
@@ -28,7 +29,7 @@ class Window {
     void UpdateInputLogic();
 
 public:
-    Window(const int windowWidth, const int windowHeight);
+    Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg);
     
     void Run();
 

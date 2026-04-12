@@ -11,13 +11,21 @@
 #include "Sample/Systems/MovementSystem.h"
 #include "Sample/Systems/CollisionSystem.h"
 #include "Sample/Systems/RenderSystem.h"
+#include "Ecs/ReadConfig/ReadConfig.h"
 
 int main() {
     setlocale(LC_ALL, "");
 
+    WindowConfig windowCfg;
+    ShooterConfig shootCfg;
+    ImageConfig imgCfg;
+    AsteroidConfig astCfg;
+
+    ReadConfig(windowCfg, shootCfg, imgCfg, astCfg);
+
     const int wWidth = 1280;
     const int wHeight = 720;
-    Window window(wWidth, wHeight);
+    Window window(windowCfg, shootCfg, imgCfg, astCfg);
 
     window.Run();
 

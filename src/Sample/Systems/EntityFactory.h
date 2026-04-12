@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../../Ecs/World/World.h"
+#include "../../Ecs/ReadConfig/ReadConfig.h"
 
 enum class EntityType
 {
@@ -23,10 +24,11 @@ class EntityFactory  {
    float _maxSpeed;
    float _offset;
 
+   float _shootSpeed;
 
 public:
-    EntityFactory (World &wrld, sf::Texture &tex, float minsiz, float maxsiz, float minsp, float maxsp, float off)
-        : _world(wrld), _texture(tex), _minSize(minsiz), _maxSize(maxsiz), _minSpeed(minsp), _maxSpeed(maxsp), _offset(off)
+    EntityFactory (World &wrld, sf::Texture &tex, const AsteroidConfig astCfg, const ShooterConfig shootCfg)
+        : _world(wrld), _texture(tex), _minSize(astCfg.minSize), _maxSize(astCfg.maxSize), _minSpeed(astCfg.minSpeed), _maxSpeed(astCfg.maxSpeed), _offset(astCfg.offset), _shootSpeed(shootCfg.cd)
     {
     }
 

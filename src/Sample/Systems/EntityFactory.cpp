@@ -28,7 +28,7 @@ void EntityFactory::CreateEntity(EntityType type, sf::Vector2f pos)
         boxColliderStorage.Add(player1, BoxColliderComponent(24, 86));
         collisionStorage.Add(player1, CollisionComponent());
         spriteStorage.Add(player1, SpriteComponent(sf::Vector2i(48, 32), sf::Vector2i(96, 128), _texture, -90, 2));
-        shooterStorage.Add(player1, ShooterComponent(60));
+        shooterStorage.Add(player1, ShooterComponent(_shootSpeed));
     }
     else if(type == EntityType::Bullet)
     {
