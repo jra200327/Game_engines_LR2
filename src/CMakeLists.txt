@@ -7,13 +7,18 @@ set(SOURCES main.cpp
         Sample/Components/PositionComponent.h
         Sample/Components/MovementComponent.h
         Sample/Components/BoxColliderComponent.h
+        Sample/Components/CircleColliderComponent.h
         Sample/Components/CollisionComponent.h
         Sample/Components/SpriteComponent.h
         Sample/Components/ShooterComponent.h
+        Sample/Components/BulletComponent.h
+        Sample/Components/AsteroidComponent.h
         Sample/Systems/InputSystem.cpp
         Sample/Systems/InputSystem.h
         Sample/Systems/CollisionSystem.cpp
         Sample/Systems/CollisionSystem.h
+        Sample/Systems/CollisionResolveSystem.cpp
+        Sample/Systems/CollisionResolveSystem.h
         Sample/Systems/RenderSystem.cpp
         Sample/Systems/RenderSystem.h
         Sample/Systems/ShootingSystem.cpp

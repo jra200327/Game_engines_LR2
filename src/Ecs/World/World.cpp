@@ -3,21 +3,28 @@
 void World::EntityComponentsChanged(const int e, const int storageId, const bool added)
 {
    auto& entity = _entities[e];
-    if (added) {
+
+    if (added)
+    {
         entity.AddComponent(storageId);
-    } else {
+    }
+    else
+    {
         const int newComponentsCount = entity.RemoveComponent(storageId);
-        if (newComponentsCount == 0)
-            RemoveEntity(e);
+
+        // ❗ ВАЖНО: не удаляем сразу!
+        if (newComponentsCount == 0 && !_isRemoving[e])
+        {
+            _isRemoving[e] = true;
+            _toRemove.push_back(e);
+        }
     }
 }
 
 World::World()
 {
-    const int DefaultEntitiesCapacity = 64;
-    std::vector<EntityId> _entities; std::vector<int> _freeEntities;
-    std::unordered_map<size_t, std::shared_ptr<BaseComponentStorage>> _componentStoragesHash;
-    std::vector<std::shared_ptr<BaseComponentStorage>> _componentStorages; int _storagesCount = 0;
+    _entities.reserve(DefaultEntitiesCapacity);
+    _isRemoving.reserve(DefaultEntitiesCapacity);
 }
 
 int World::CreateEntity()
@@ -30,22 +37,39 @@ int World::CreateEntity()
     } else {
         entityId = _entities.size();
         _entities.emplace_back(entityId, 1);
+        _isRemoving.push_back(false);
     }
     return entityId;
 }
 
-void World::RemoveEntity(int e) {
+void World::RemoveEntity(int e)
+{
     auto& entity = _entities[e];
+
     if (entity.IsRemoved())
         return;
-    const auto& components = entity.Components();
-    if (!components.empty()) {
-        for (int i = components.size() - 1; i >= 0; i--)
-            _componentStorages[components[i]]->Remove(e);
-    } else {
-        entity.Remove();
-    _freeEntities.push_back(entity.Id);
+
+    auto& components = entity.Components();
+
+    for (int i = components.size() - 1; i >= 0; --i)
+    {
+        _componentStorages[components[i]]->Remove(e);
     }
+
+    entity.Remove();
+
+    _freeEntities.push_back(entity.Id);
+    _isRemoving[e] = false;
+}
+
+void World::Flush()
+{
+    for (int e : _toRemove)
+    {
+        RemoveEntity(e);
+    }
+
+    _toRemove.clear();
 }
 
 EntityId World::GetPackedEntity(const int e) const
@@ -61,6 +85,7 @@ bool World::UnpackEntity(const EntityId &eId, int &e) const
 
 bool World::IsEntityAlive(const int e) const
 {
-    auto& entity = _entities[e];
-    return !entity.IsRemoved() && entity.Id > 0 && entity.Id < _entities.size() && e == entity.Id; 
+    return e >= 0 &&
+           e < (int)_entities.size() &&
+           !_entities[e].IsRemoved();
 }

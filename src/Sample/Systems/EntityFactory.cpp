@@ -3,9 +3,13 @@
 #include "../Components/PositionComponent.h"
 #include "../Components/MovementComponent.h"
 #include "../Components/BoxColliderComponent.h"
+#include "../Components/CircleColliderComponent.h"
 #include "../Components/CollisionComponent.h"
 #include "../Components/SpriteComponent.h"
 #include "../Components/ShooterComponent.h"
+#include "../Components/BulletComponent.h"
+#include "../Components/AsteroidComponent.h"
+#include <random>
 
 void EntityFactory::CreateEntity(EntityType type, sf::Vector2f pos)
 {
@@ -21,7 +25,7 @@ void EntityFactory::CreateEntity(EntityType type, sf::Vector2f pos)
 
         positionsStorage.Add(player1, PositionComponent(pos.x, pos.y));
         movementsStorage.Add(player1, MovementComponent(10, sf::Vector2f(0, 0)));
-        boxColliderStorage.Add(player1, BoxColliderComponent(10, 10));
+        boxColliderStorage.Add(player1, BoxColliderComponent(24, 86));
         collisionStorage.Add(player1, CollisionComponent());
         spriteStorage.Add(player1, SpriteComponent(sf::Vector2i(48, 32), sf::Vector2i(96, 128), _texture, -90));
         shooterStorage.Add(player1, ShooterComponent(60));
@@ -34,11 +38,47 @@ void EntityFactory::CreateEntity(EntityType type, sf::Vector2f pos)
         auto& boxColliderStorage = _world.GetStorage<BoxColliderComponent>();
         auto& collisionStorage = _world.GetStorage<CollisionComponent>();
         auto& spriteStorage = _world.GetStorage<SpriteComponent>();
+        auto& bulletStorage = _world.GetStorage<BulletComponent>();
 
         positionsStorage.Add(bullet, PositionComponent(pos.x, pos.y));
         movementsStorage.Add(bullet, MovementComponent(50, sf::Vector2f(0, -1)));
-        boxColliderStorage.Add(bullet, BoxColliderComponent(10, 10));
+        boxColliderStorage.Add(bullet, BoxColliderComponent(8, 8));
         collisionStorage.Add(bullet, CollisionComponent());
         spriteStorage.Add(bullet, SpriteComponent(sf::Vector2i(16, 16), sf::Vector2i(224, 144), _texture, -90));
+        bulletStorage.Add(bullet, BulletComponent());
+    }
+    else if(type == EntityType::Asteroid)
+    {
+        const int asteroid = _world.CreateEntity();
+        auto& positionsStorage = _world.GetStorage<PositionComponent>();
+        auto& movementsStorage = _world.GetStorage<MovementComponent>();
+        auto& circleColliderStorage = _world.GetStorage<CircleColliderComponent>();
+        auto& collisionStorage = _world.GetStorage<CollisionComponent>();
+        auto& spriteStorage = _world.GetStorage<SpriteComponent>();
+        auto& asteroidStorage = _world.GetStorage<AsteroidComponent>();
+
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> dist(0, 2);
+
+        int value = dist(gen);
+
+        sf::Vector2i atlPos = sf::Vector2i(0, 80);
+
+        if (value == 1)
+        {
+            atlPos = sf::Vector2i(48, 80);
+        }
+        else if (value == 2)
+        {
+            atlPos = sf::Vector2i(96, 80);
+        }
+
+        positionsStorage.Add(asteroid, PositionComponent(pos.x, pos.y));
+        movementsStorage.Add(asteroid, MovementComponent(1, sf::Vector2f(0, 1)));
+        circleColliderStorage.Add(asteroid, CircleColliderComponent(30));
+        collisionStorage.Add(asteroid, CollisionComponent());
+        spriteStorage.Add(asteroid, SpriteComponent(sf::Vector2i(48, 48), atlPos, _texture, 0));
+        asteroidStorage.Add(asteroid, AsteroidComponent());
     }
 }

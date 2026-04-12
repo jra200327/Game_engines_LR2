@@ -71,12 +71,23 @@ public:
 
     void Remove(const int e) override
     {
-        int arrayIndex = _sparse[e];
-        int lastEntityIid = _dense[--_count];
-        _data[arrayIndex] = _data[_count];
-        _dense[arrayIndex] = lastEntityIid;
-        _sparse[lastEntityIid] = arrayIndex;
+        if (e >= _sparse.size() || _sparse[e] == -1)
+            return;
+
+        int removeIndex = _sparse[e];
+        int lastIndex = --_count;
+
+        if (removeIndex != lastIndex)
+        {
+            _data[removeIndex] = _data[lastIndex];
+
+            int lastEntity = _dense[lastIndex];
+            _dense[removeIndex] = lastEntity;
+            _sparse[lastEntity] = removeIndex;
+        }
+
         _sparse[e] = -1;
+
         _world.EntityComponentsChanged(e, _id, false);
     }
 

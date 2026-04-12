@@ -15,6 +15,9 @@ class World final : public internal::IWorldInternal {
     std::vector<EntityId> _entities;
     std::vector<int> _freeEntities;
 
+    std::vector<int> _toRemove;
+    std::vector<bool> _isRemoving;
+
     std::unordered_map<size_t, std::shared_ptr<BaseComponentStorage>> _componentStoragesHash;
     std::vector<std::shared_ptr<BaseComponentStorage>> _componentStorages;
 
@@ -31,6 +34,8 @@ public:
 
     bool IsEntityAlive(int e) const override;
     void EntityComponentsChanged(int e, int storageId, bool added) override;
+
+    void Flush();
 
     template <typename T>
     std::shared_ptr<ComponentStorage<T>> GetRawStorage()

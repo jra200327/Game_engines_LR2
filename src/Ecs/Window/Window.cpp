@@ -4,6 +4,7 @@
 #include "../../Sample/Systems/InputSystem.h"
 #include "../../Sample/Systems/MovementSystem.h"
 #include "../../Sample/Systems/CollisionSystem.h"
+#include "../../Sample/Systems/CollisionResolveSystem.h"
 #include "../../Sample/Systems/RenderSystem.h"
 #include "../../Sample/Systems/ShootingSystem.h"
 
@@ -31,7 +32,7 @@ void Window::Initialize()
     _systems->AddSystem(std::make_shared<CollisionSystem>(_world));
     _systems->AddSystem(std::make_shared<RenderSystem>(_world, _window, _texture));
     _systems->AddSystem(std::make_shared<ShootingSystem>(_world, *_entityFactory));
-
+    _systems->AddSystem(std::make_shared<CollisionResolveSystem>(_world));
 }
 
 void Window::Run()
@@ -40,5 +41,7 @@ void Window::Run()
         _window.clear(sf::Color::Black);
         _systems->Update();
         _window.display();
+
+        _world.Flush();
     }
 }
