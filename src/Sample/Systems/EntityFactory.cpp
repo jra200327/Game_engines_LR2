@@ -80,7 +80,7 @@ void EntityFactory::CreateEntity(EntityType type, sf::Vector2f pos)
 
         positionsStorage.Add(asteroid, PositionComponent(pos.x, pos.y));
         movementsStorage.Add(asteroid, MovementComponent(randomSpeed, sf::Vector2f(randomXDir, 1)));
-        circleColliderStorage.Add(asteroid, CircleColliderComponent(30));
+        circleColliderStorage.Add(asteroid, CircleColliderComponent(randomSize*0.7*48));
         collisionStorage.Add(asteroid, CollisionComponent());
         spriteStorage.Add(asteroid, SpriteComponent(sf::Vector2i(48, 48), atlPos, _texture, 0, randomSize));
         asteroidStorage.Add(asteroid, AsteroidComponent());
