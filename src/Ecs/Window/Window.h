@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <memory>
 
 #include "imgui.h"
 #include "imgui-SFML.h"
@@ -13,6 +14,7 @@
 #include "../Window/Window.h"
 #include "../../Sample/Systems/EntityFactory.h"
 #include "../ReadConfig/ReadConfig.h"
+#include "../../UI/Text.h"
 
 class Window {
     sf::RenderWindow _window;
@@ -21,18 +23,25 @@ class Window {
     std::shared_ptr<EntityFactory> _entityFactory;
     sf::Texture _texture;
     int _spawnCd;
+    std::filesystem::path _fontPath;
 
     sf::Clock _deltaClock;
 
     bool _isRun;
 
+    std::shared_ptr<Text> _text;
+
+    int _score = 0;
+
     void Initialize();
     void UpdateInputLogic();
 
 public:
-    Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg, const SpawnConfig spCfg);
+    Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg, const SpawnConfig spCfg, const TextConfig txtCfg);
     
     void Run();
+
+    void UpdateScore(int i);
 
     sf::RenderWindow& GetWindow()
     {

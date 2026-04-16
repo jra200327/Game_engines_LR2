@@ -30,6 +30,11 @@ struct SpawnConfig {
     float cd;
 };
 
-bool ReadConfig(WindowConfig& window, ShooterConfig& shooter, ImageConfig& image, AsteroidConfig& asteroid, SpawnConfig& spawn);
+struct TextConfig
+{
+    std::filesystem::path path;
+};
+
+bool ReadConfig(WindowConfig& window, ShooterConfig& shooter, ImageConfig& image, AsteroidConfig& asteroid, SpawnConfig& spawn, TextConfig& text);
 
 #endif // READ_CONFIG_H

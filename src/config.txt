@@ -3,3 +3,4 @@ Shooter 30
 Image ..\..\Images\asteroids.png
 Asteroid 0.5 2.5 1 4 1
 Spawn 60
+Font ..\..\Fonts\futura.ttf

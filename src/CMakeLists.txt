@@ -32,6 +32,7 @@ set(SOURCES main.cpp
         Sample/Components/MoveInputEvent.h
         Sample/Components/ShootEvent.h
         Ecs/Window/Window.cpp
+        UI/Text.cpp
 )
 
 add_subdirectory(Ecs)
@@ -56,6 +57,7 @@ target_include_directories(${TARGET_NAME} PRIVATE
 # Copy resources to build directory
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Images DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/config.txt DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Fonts DESTINATION ${CMAKE_BINARY_DIR})
 
 # Set working directory for debugging
 set_target_properties(${TARGET_NAME} PROPERTIES

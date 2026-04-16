@@ -21,12 +21,13 @@ int main() {
     ImageConfig imgCfg;
     AsteroidConfig astCfg;
     SpawnConfig spCfg;
+    TextConfig txtCfg;
 
-    ReadConfig(windowCfg, shootCfg, imgCfg, astCfg, spCfg);
+    ReadConfig(windowCfg, shootCfg, imgCfg, astCfg, spCfg, txtCfg);
 
     const int wWidth = 1280;
     const int wHeight = 720;
-    Window window(windowCfg, shootCfg, imgCfg, astCfg, spCfg);
+    Window window(windowCfg, shootCfg, imgCfg, astCfg, spCfg, txtCfg);
 
     window.Run();
 
