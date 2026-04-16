@@ -21,9 +21,14 @@ void ShootingSystem::OnUpdate()
                 std::cout << "Pew" << std::endl;;
             }
             
-            shoot.timer--;
         }
 
         world.RemoveEntity(eventEntity);
+    }
+
+    for (const auto ent : _shooter)
+    {
+        auto& shoot = _shooterComponents.Get(ent);
+        shoot.timer--;
     }
 }

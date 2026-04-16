@@ -27,6 +27,8 @@ set(SOURCES main.cpp
         Sample/Systems/ShootingSystem.h
         Sample/Systems/EntityFactory.cpp
         Sample/Systems/EntityFactory.h
+        Sample/Systems/BoundariesSystem.cpp
+        Sample/Systems/BoundariesSystem.h
         Sample/Components/MoveInputEvent.h
         Sample/Components/ShootEvent.h
         Ecs/Window/Window.cpp

@@ -8,6 +8,8 @@
 #include "../../Sample/Systems/RenderSystem.h"
 #include "../../Sample/Systems/ShootingSystem.h"
 #include "../../Sample/Systems/AsteroidSpawnSystem.h"
+#include "../../Sample/Systems/BoundariesSystem.h"
+
 
 Window::Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg, const SpawnConfig spCfg): _world(), _spawnCd(spCfg.cd)
 {
@@ -35,6 +37,7 @@ void Window::Initialize()
     _systems->AddSystem(std::make_shared<ShootingSystem>(_world, *_entityFactory));
     _systems->AddSystem(std::make_shared<CollisionResolveSystem>(_world));
     _systems->AddSystem(std::make_shared<AsteroidSpawnSystem>(_world, *_entityFactory, _spawnCd, _window.getSize().x));
+    _systems->AddSystem(std::make_shared<BoundariesSystem>(_world, _window));
 }
 
 void Window::Run()
