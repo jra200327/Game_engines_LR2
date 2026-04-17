@@ -1,5 +1,7 @@
 #include "Window.h"
 
+#include <random>
+
 #include "../../Sample/Systems/InitSystem.h"
 #include "../../Sample/Systems/InputSystem.h"
 #include "../../Sample/Systems/MovementSystem.h"
@@ -7,7 +9,6 @@
 #include "../../Sample/Systems/CollisionResolveSystem.h"
 #include "../../Sample/Systems/RenderSystem.h"
 #include "../../Sample/Systems/ShootingSystem.h"
-#include "../../Sample/Systems/AsteroidSpawnSystem.h"
 #include "../../Sample/Systems/BoundariesSystem.h"
 
 
@@ -45,7 +46,8 @@ void Window::Initialize()
     _systems->AddSystem(std::make_shared<RenderSystem>(_world, _window, _texture));
     _systems->AddSystem(std::make_shared<ShootingSystem>(_world, *_entityFactory));
     _systems->AddSystem(std::make_shared<CollisionResolveSystem>(_world, *_scoreManager, *this));
-    _systems->AddSystem(std::make_shared<AsteroidSpawnSystem>(_world, *_entityFactory, _spawnCd, _window.getSize().x));
+    _asteroidSpawn = std::make_shared<AsteroidSpawnSystem>(_world, *_entityFactory, _spawnCd, _window.getSize().x);
+    _systems->AddSystem(_asteroidSpawn);
     _systems->AddSystem(std::make_shared<BoundariesSystem>(_world, _window));
 
     _uiText.push_back(_scoreManager->GetText());
@@ -97,6 +99,15 @@ void Window::UpdateGUI()
 
     ImGui::InputFloat("Min speed", &_entityFactory->GetMinSpeed(), 0.1f, 1.0f, "%.3f");
     ImGui::InputFloat("Max speed", &_entityFactory->GetMaxSpeed(), 0.1f, 1.0f, "%.3f");
+    ImGui::InputFloat("Asteroid spawn cooldown", &_asteroidSpawn->GetCd(), 10, 1.0f, "%.3f");
+    if (ImGui::Button("Spawn Asteroid"))
+    {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> dist(0, _window.getSize().x);
+        int value = dist(gen);
+        _entityFactory->CreateEntity(EntityType::Asteroid, sf::Vector2f(value, -100));
+    }
     ImGui::End();
 }
 

@@ -17,6 +17,7 @@
 #include "../../UI/Text.h"
 #include "../Managers/ScoreManager.h"
 #include "../Managers/RestartManager.h"
+#include "../../Sample/Systems/AsteroidSpawnSystem.h"
 
 class Window {
     sf::RenderWindow _window;
@@ -32,10 +33,11 @@ class Window {
     bool _isRun;
     bool _gameActive = true;
 
-   std::shared_ptr<ScoreManager> _scoreManager;
-   std::shared_ptr<RestartManager> _restartManager;
+    std::shared_ptr<AsteroidSpawnSystem> _asteroidSpawn;
+    std::shared_ptr<ScoreManager> _scoreManager;
+    std::shared_ptr<RestartManager> _restartManager;
 
-   std::vector<std::shared_ptr<Text>> _uiText;
+    std::vector<std::shared_ptr<Text>> _uiText;
 
     void Initialize();
     void UpdateInputLogic();

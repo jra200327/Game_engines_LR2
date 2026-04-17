@@ -25,6 +25,8 @@ public:
     void OnInit() override;
 
     void OnUpdate() override;
+
+    float& GetCd();
 };
 
 #endif //ASTEROIDSPAWNSYSTEM_H

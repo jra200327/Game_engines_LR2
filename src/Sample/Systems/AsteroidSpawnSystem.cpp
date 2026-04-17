@@ -23,3 +23,8 @@ void AsteroidSpawnSystem::OnUpdate()
 
     _timer--;
 }
+
+float& AsteroidSpawnSystem::GetCd()
+{
+    return _spawnCd;
+}
