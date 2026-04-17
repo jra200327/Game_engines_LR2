@@ -16,6 +16,7 @@
 #include "../ReadConfig/ReadConfig.h"
 #include "../../UI/Text.h"
 #include "../Managers/ScoreManager.h"
+#include "../Managers/RestartManager.h"
 
 class Window {
     sf::RenderWindow _window;
@@ -29,8 +30,12 @@ class Window {
     sf::Clock _deltaClock;
 
     bool _isRun;
+    bool _gameActive = true;
 
    std::shared_ptr<ScoreManager> _scoreManager;
+   std::shared_ptr<RestartManager> _restartManager;
+
+   std::vector<std::shared_ptr<Text>> _uiText;
 
     void Initialize();
     void UpdateInputLogic();
@@ -39,6 +44,8 @@ public:
     Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg, const SpawnConfig spCfg, const TextConfig txtCfg);
     
     void Run();
+
+    void EndGame();
 
     sf::RenderWindow& GetWindow()
     {

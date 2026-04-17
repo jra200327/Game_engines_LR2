@@ -13,7 +13,11 @@ public:
     ScoreManager(sf::Vector2f pos, std::filesystem::path fontPath, uint8_t color[3]);
 
     void UpdateScore(int i);
+    int GetScore();
     std::shared_ptr<Text> GetText();
+
+    void ToggleScore();
+    void RestartScore();
 };
 
 #endif //SCOREMANAGER_H

@@ -22,6 +22,7 @@ public:
 
     void Initialize();
     void Update();
+    void RestartSystems();
 };
 
 

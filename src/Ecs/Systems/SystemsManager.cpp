@@ -38,3 +38,15 @@ void SystemsManager::Update()
         _systems[i]->OnUpdate();
     }
 }
+
+void SystemsManager::RestartSystems()
+{
+    if (_initializers.empty())
+        return;
+    for(int i = 0; i < _initializers.size(); i++)
+    {
+        _newInitializers.push_back(_initializers[i]);
+    }
+    _initializers.clear();
+    Initialize();
+}

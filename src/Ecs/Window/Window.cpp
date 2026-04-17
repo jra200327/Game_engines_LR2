@@ -31,9 +31,10 @@ _world(), _spawnCd(spCfg.cd), _fontPath(txtCfg.path)
 void Window::Initialize()
 {
     uint8_t color[3] = {255, 255, 255};
-    sf::Vector2f textPos(_window.getSize().x/2, 0);
+    sf::Vector2f textPos(_window.getSize().x/2, _window.getSize().y/2);
 
     _scoreManager = std::make_shared<ScoreManager>(textPos, _fontPath, color);
+    _restartManager = std::make_shared<RestartManager>(textPos, _fontPath, color, _world);
 
     _systems->AddInitializer(std::make_shared<InitSystem>(_world, _texture, *_entityFactory));
     _systems->AddSystem(std::make_shared<InputSystem>(_world, _window));
@@ -41,19 +42,52 @@ void Window::Initialize()
     _systems->AddSystem(std::make_shared<CollisionSystem>(_world));
     _systems->AddSystem(std::make_shared<RenderSystem>(_world, _window, _texture));
     _systems->AddSystem(std::make_shared<ShootingSystem>(_world, *_entityFactory));
-    _systems->AddSystem(std::make_shared<CollisionResolveSystem>(_world, *_scoreManager));
+    _systems->AddSystem(std::make_shared<CollisionResolveSystem>(_world, *_scoreManager, *this));
     _systems->AddSystem(std::make_shared<AsteroidSpawnSystem>(_world, *_entityFactory, _spawnCd, _window.getSize().x));
     _systems->AddSystem(std::make_shared<BoundariesSystem>(_world, _window));
+
+    _uiText.push_back(_scoreManager->GetText());
+    _uiText.push_back(_restartManager->GetGameOverText());
+    _uiText.push_back(_restartManager->GetScoreText());
+
 }
 
 void Window::Run()
 {
     while (_window.isOpen()) {
         _window.clear(sf::Color::Black);
-        _systems->Update();
-        _scoreManager->GetText()->Draw(_window);
+        if(_gameActive)
+            _systems->Update();
+        else
+        {
+            while (const std::optional event = _window.pollEvent())
+            {
+                if (event->is<sf::Event::Closed>())
+                {
+                    _window.close();
+                }
+                else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+                {
+                    _restartManager->Restart();
+                    _systems->RestartSystems();
+                    _scoreManager->ToggleScore();
+                    _scoreManager->RestartScore();
+                    _gameActive = true;
+                }
+            }
+        }
+        for (auto text : _uiText)
+        {
+            text->Draw(_window);
+        }
         _window.display();
-
         _world.Flush();
     }
+}
+
+void Window::EndGame()
+{
+    _scoreManager->ToggleScore();
+    _gameActive = false;
+    _restartManager->EndGame(_scoreManager->GetScore());
 }

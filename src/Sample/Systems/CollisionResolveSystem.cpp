@@ -44,7 +44,7 @@ void CollisionResolveSystem::OnUpdate()
 
                 std::cout << "Player died" << std::endl;
 
-                toDestroy.push_back(player);
+                _window.EndGame();
             }
         }
 

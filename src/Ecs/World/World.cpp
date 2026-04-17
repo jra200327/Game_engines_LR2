@@ -4,6 +4,12 @@ void World::EntityComponentsChanged(const int e, const int storageId, const bool
 {
    auto& entity = _entities[e];
 
+   if (e < 0 || e >= (int)_entities.size())
+        return;
+
+    if (e >= (int)_isRemoving.size())
+        return;
+
     if (added)
     {
         entity.AddComponent(storageId);
@@ -39,6 +45,12 @@ int World::CreateEntity()
         _entities.emplace_back(entityId, 1);
         _isRemoving.push_back(false);
     }
+
+    if (entityId >= (int)_isRemoving.size())
+    {
+        _isRemoving.resize(entityId + 1, false);
+    }
+
     return entityId;
 }
 
@@ -49,7 +61,7 @@ void World::RemoveEntity(int e)
     if (entity.IsRemoved())
         return;
 
-    auto& components = entity.Components();
+    auto components = entity.Components();
 
     for (int i = components.size() - 1; i >= 0; --i)
     {
@@ -88,4 +100,18 @@ bool World::IsEntityAlive(const int e) const
     return e >= 0 &&
            e < (int)_entities.size() &&
            !_entities[e].IsRemoved();
+}
+
+void World::RestartWorld()
+{
+   for (int i = 0; i < (int)_entities.size(); ++i)
+    {
+        if (IsEntityAlive(i) && !_isRemoving[i])
+        {
+            std::cout << "Removing " << i << std::endl;
+
+            _isRemoving[i] = true;
+            _toRemove.push_back(i);
+        }
+    }
 }

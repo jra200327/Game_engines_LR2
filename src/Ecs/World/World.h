@@ -37,6 +37,8 @@ public:
 
     void Flush();
 
+    void RestartWorld();
+
     template <typename T>
     std::shared_ptr<ComponentStorage<T>> GetRawStorage()
     {

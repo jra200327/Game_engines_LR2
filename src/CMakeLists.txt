@@ -34,6 +34,7 @@ set(SOURCES main.cpp
         Ecs/Window/Window.cpp
         UI/Text.cpp
         Ecs/Managers/ScoreManager.cpp
+        Ecs/Managers/RestartManager.cpp
 )
 
 add_subdirectory(Ecs)
