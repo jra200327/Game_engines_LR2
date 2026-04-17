@@ -89,8 +89,25 @@ void EntityFactory::CreateEntity(EntityType type, sf::Vector2f pos)
 
 float EntityFactory::RandomFloat(float min, float max)
 {
-    std::random_device rng;
-    std::mt19937 gen(rng());
-    std::uniform_real_distribution<float> dist(min, max);
-    return dist(rng);
+    if (max > min)
+    {
+        std::random_device rng;
+        std::mt19937 gen(rng());
+        std::uniform_real_distribution<float> dist(min, max);
+        return dist(rng);
+    }
+    else
+    {
+        return max;
+    }
+}
+
+float& EntityFactory::GetMinSpeed()
+{
+    return _minSpeed;
+}
+
+float& EntityFactory::GetMaxSpeed()
+{
+    return _maxSpeed;
 }

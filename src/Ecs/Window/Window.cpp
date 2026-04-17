@@ -25,6 +25,8 @@ _world(), _spawnCd(spCfg.cd), _fontPath(txtCfg.path)
     _systems = std::make_shared<SystemsManager>(_world);
     _entityFactory = std::make_shared<EntityFactory>(_world, _texture, astCfg, shootCfg);
 
+    ImGui::SFML::Init(_window);
+
     Initialize();
 }
 
@@ -55,34 +57,30 @@ void Window::Initialize()
 void Window::Run()
 {
     while (_window.isOpen()) {
+
+        sf::Time delta = _deltaClock.restart();
+        ImGui::SFML::Update(_window, delta);
+
         _window.clear(sf::Color::Black);
         if(_gameActive)
             _systems->Update();
         else
         {
-            while (const std::optional event = _window.pollEvent())
-            {
-                if (event->is<sf::Event::Closed>())
-                {
-                    _window.close();
-                }
-                else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
-                {
-                    _restartManager->Restart();
-                    _systems->RestartSystems();
-                    _scoreManager->ToggleScore();
-                    _scoreManager->RestartScore();
-                    _gameActive = true;
-                }
-            }
+             UpdateInputLogic();
         }
+
         for (auto text : _uiText)
         {
             text->Draw(_window);
         }
+        UpdateGUI();
+        ImGui::SFML::Render(_window);
         _window.display();
         _world.Flush();
     }
+
+    _window.close();
+    ImGui::SFML::Shutdown();
 }
 
 void Window::EndGame()
@@ -90,4 +88,37 @@ void Window::EndGame()
     _scoreManager->ToggleScore();
     _gameActive = false;
     _restartManager->EndGame(_scoreManager->GetScore());
+}
+
+void Window::UpdateGUI()
+{
+    ImGui::Begin("Config settings");
+    ImGui::Text("Asteroid parameters");
+
+    ImGui::InputFloat("Min speed", &_entityFactory->GetMinSpeed(), 0.1f, 1.0f, "%.3f");
+    ImGui::InputFloat("Max speed", &_entityFactory->GetMaxSpeed(), 0.1f, 1.0f, "%.3f");
+    ImGui::End();
+}
+
+void Window::UpdateInputLogic()
+{
+    while (const std::optional event = _window.pollEvent())
+    {
+        ImGui::SFML::ProcessEvent(_window, *event);
+        if (event->is<sf::Event::Closed>())
+        {
+            _window.close();
+        }
+        else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+        {
+            if(!_gameActive)
+            {
+                _restartManager->Restart();
+                _systems->RestartSystems();
+                _scoreManager->ToggleScore();
+                _scoreManager->RestartScore();
+                _gameActive = true;
+            }
+        }
+    }
 }

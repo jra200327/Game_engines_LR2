@@ -39,6 +39,7 @@ class Window {
 
     void Initialize();
     void UpdateInputLogic();
+    void UpdateGUI();
 
 public:
     Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg, const SpawnConfig spCfg, const TextConfig txtCfg);

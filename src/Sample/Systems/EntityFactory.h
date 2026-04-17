@@ -36,6 +36,8 @@ public:
 
     float RandomFloat(float min, float max);
 
+    float& GetMinSpeed();
+    float& GetMaxSpeed();
 };
 
 #endif //ENTITYFACTORY_H

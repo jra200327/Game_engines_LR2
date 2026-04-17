@@ -1,5 +1,8 @@
 #include "InputSystem.h"
 
+#include "imgui.h"
+#include "imgui-SFML.h"
+
 void InputSystem::OnInit()
 {
 }
@@ -9,6 +12,7 @@ void InputSystem::OnUpdate()
     // Process window events
     while (const std::optional event = _window.pollEvent())
     {
+        ImGui::SFML::ProcessEvent(_window, *event);
         if (event->is<sf::Event::Closed>())
         {
             _window.close();
