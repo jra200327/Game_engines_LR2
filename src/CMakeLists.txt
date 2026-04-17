@@ -33,6 +33,7 @@ set(SOURCES main.cpp
         Sample/Components/ShootEvent.h
         Ecs/Window/Window.cpp
         UI/Text.cpp
+        Ecs/Managers/ScoreManager.cpp
 )
 
 add_subdirectory(Ecs)

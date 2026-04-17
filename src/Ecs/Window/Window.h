@@ -15,6 +15,7 @@
 #include "../../Sample/Systems/EntityFactory.h"
 #include "../ReadConfig/ReadConfig.h"
 #include "../../UI/Text.h"
+#include "../Managers/ScoreManager.h"
 
 class Window {
     sf::RenderWindow _window;
@@ -29,9 +30,7 @@ class Window {
 
     bool _isRun;
 
-    std::shared_ptr<Text> _text;
-
-    int _score = 0;
+   std::shared_ptr<ScoreManager> _scoreManager;
 
     void Initialize();
     void UpdateInputLogic();
@@ -40,8 +39,6 @@ public:
     Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg, const SpawnConfig spCfg, const TextConfig txtCfg);
     
     void Run();
-
-    void UpdateScore(int i);
 
     sf::RenderWindow& GetWindow()
     {

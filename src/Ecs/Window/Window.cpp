@@ -30,20 +30,20 @@ _world(), _spawnCd(spCfg.cd), _fontPath(txtCfg.path)
 
 void Window::Initialize()
 {
+    uint8_t color[3] = {255, 255, 255};
+    sf::Vector2f textPos(_window.getSize().x/2, 0);
+
+    _scoreManager = std::make_shared<ScoreManager>(textPos, _fontPath, color);
+
     _systems->AddInitializer(std::make_shared<InitSystem>(_world, _texture, *_entityFactory));
     _systems->AddSystem(std::make_shared<InputSystem>(_world, _window));
     _systems->AddSystem(std::make_shared<MovementSystem>(_world));
     _systems->AddSystem(std::make_shared<CollisionSystem>(_world));
     _systems->AddSystem(std::make_shared<RenderSystem>(_world, _window, _texture));
     _systems->AddSystem(std::make_shared<ShootingSystem>(_world, *_entityFactory));
-    _systems->AddSystem(std::make_shared<CollisionResolveSystem>(_world, *this));
+    _systems->AddSystem(std::make_shared<CollisionResolveSystem>(_world, *_scoreManager));
     _systems->AddSystem(std::make_shared<AsteroidSpawnSystem>(_world, *_entityFactory, _spawnCd, _window.getSize().x));
     _systems->AddSystem(std::make_shared<BoundariesSystem>(_world, _window));
-
-    uint8_t color[3] = {255, 255, 255};
-    _text = std::make_shared<Text>(_fontPath, "0", 40, color);
-    float textX = _window.getSize().x/2 - _text->GetCharacterSize();
-    _text->SetPosition({textX, (float) _text->GetCharacterSize()});
 }
 
 void Window::Run()
@@ -51,15 +51,9 @@ void Window::Run()
     while (_window.isOpen()) {
         _window.clear(sf::Color::Black);
         _systems->Update();
-        _text->SetText(std::to_string(_score));
-        _text->Draw(_window);
+        _scoreManager->GetText()->Draw(_window);
         _window.display();
 
         _world.Flush();
     }
-}
-
-void Window::UpdateScore(int i)
-{
-    _score +=i;
 }
