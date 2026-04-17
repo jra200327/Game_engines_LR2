@@ -18,6 +18,7 @@
 #include "../Managers/ScoreManager.h"
 #include "../Managers/RestartManager.h"
 #include "../../Sample/Systems/AsteroidSpawnSystem.h"
+#include "../../Sample/Components/PositionComponent.h"
 
 class Window {
     sf::RenderWindow _window;
@@ -38,6 +39,8 @@ class Window {
     std::shared_ptr<RestartManager> _restartManager;
 
     std::vector<std::shared_ptr<Text>> _uiText;
+
+    ComponentStorage<PositionComponent>& _positionComponents;
 
     void Initialize();
     void UpdateInputLogic();

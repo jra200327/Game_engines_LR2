@@ -22,7 +22,7 @@ class CollisionSystem final : public ISystem {
 
 public:
     CollisionSystem(World &world)
-        : ISystem(world),
+        : ISystem(world), 
             _positionComponents(world.GetStorage<PositionComponent>()),
             _boxColliderComponents(world.GetStorage<BoxColliderComponent>()),
             _circleColliderComponents(world.GetStorage<CircleColliderComponent>()),

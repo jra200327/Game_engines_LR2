@@ -13,7 +13,7 @@
 
 
 Window::Window(const WindowConfig windCfg, const ShooterConfig shootCfg, const ImageConfig imgCfg, const AsteroidConfig astCfg, const SpawnConfig spCfg, const TextConfig txtCfg): 
-_world(), _spawnCd(spCfg.cd), _fontPath(txtCfg.path)
+_world(), _spawnCd(spCfg.cd), _fontPath(txtCfg.path), _positionComponents(_world.GetStorage<PositionComponent>())
 {
     _window.create(sf::VideoMode({static_cast<unsigned int>(windCfg.width), static_cast<unsigned int>(windCfg.height)}), "Asteroid");
      auto desktop = sf::VideoMode::getDesktopMode();
@@ -53,7 +53,6 @@ void Window::Initialize()
     _uiText.push_back(_scoreManager->GetText());
     _uiText.push_back(_restartManager->GetGameOverText());
     _uiText.push_back(_restartManager->GetScoreText());
-
 }
 
 void Window::Run()
@@ -108,6 +107,13 @@ void Window::UpdateGUI()
         int value = dist(gen);
         _entityFactory->CreateEntity(EntityType::Asteroid, sf::Vector2f(value, -100));
     }
+
+    for (auto entity : _positionComponents.Entities())
+    {
+        const auto& pos = _positionComponents.Get(entity);
+        ImGui::Text("Entity %d | x: %.2f | y: %.2f", entity, pos.X, pos.Y);
+    }
+
     ImGui::End();
 }
 
